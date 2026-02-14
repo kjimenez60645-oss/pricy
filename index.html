@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Anniversary & Valentine's Day! 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #56ab2f 0%, #f093fb 50%, #ff9a9e 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Floating hearts background */
+        .heart-bg {
+            position: absolute;
+            font-size: 35px;
+            animation: float 6s infinite;
+            opacity: 0.6;
+            bottom: -50px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            z-index: 10;
+            animation: slideIn 0.6s ease-out;
+            margin: 20px auto;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        h1 {
+            color: #d4447e;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .no-btn {
+            background: #e0e0e0;
+            color: #666;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background: #d0d0d0;
+        }
+
+        .response {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .response.show {
+            display: block;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .page {
+            animation: fadeIn 0.5s;
+        }
+
+        .celebration {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .time-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-btn {
+            padding: 12px 25px;
+            font-size: 1em;
+            background: linear-gradient(135deg, #56ab2f 0%, #66bb3f 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .time-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(86, 171, 47, 0.4);
+        }
+
+        .time-btn.selected {
+            background: linear-gradient(135deg, #2d7a3e 0%, #4a9f5a 100%);
+            transform: scale(1.1);
+            box-shadow: 0 5px 25px rgba(45, 122, 62, 0.6);
+        }
+
+        .time-btn.disabled {
+            background: #d0d0d0;
+            color: #999;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .time-btn.disabled:hover {
+            transform: scale(1);
+            box-shadow: none;
+        }
+
+        .continue-btn {
+            margin-top: 20px;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: none;
+        }
+
+        .continue-btn.show {
+            display: inline-block;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(212, 68, 126, 0.3);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 2em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: all 0.3s;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-arrow:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            border-color: rgba(212, 68, 126, 0.6);
+        }
+
+        .nav-arrow.show {
+            display: flex;
+        }
+
+        .nav-arrow.left {
+            left: 20px;
+        }
+
+        .nav-arrow.right {
+            right: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            p {
+                font-size: 1em;
+            }
+            
+            .emoji {
+                font-size: 60px;
+            }
+            
+            button {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" loop>
+        <source src="https://github.com/kjimenez60645-oss/pricy/raw/main/rusowsky%20-%20neo%20roneo.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+        <button id="musicToggle" onclick="toggleMusic()" style="background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,0.2); font-size: 1.5em; display: none; align-items: center; justify-content: center;">
+            🔇
+        </button>
+    </div>
+
+    <button class="nav-arrow left" id="backArrow" onclick="goBack()">⬅️</button>
+    <button class="nav-arrow right" id="forwardArrow" onclick="goForward()">➡️</button>
+
+    <div class="container">
+        <div class="page" id="page1">
+            <div class="emoji">💝</div>
+            <h1>Happy Anniversary & Valentine's Day!</h1>
+            <p>Can't believe we've made it this far together! You're still my favorite person 💕</p>
+            <p style="font-size: 0.95em; color: #666; font-style: italic; margin-bottom: 15px;">(You're everything I could've asked for! Thank you for being the light in my life. <3)</p>
+            <p style="font-weight: bold;">It's our anniversary TODAY!!! Let's celebrate in Minecraft :p </p>
+            <p style="margin-top: 10px;">And while we're at it... wanna celebrate Valentine's Day tomorrow too? 💕</p>
+            
+            <div class="buttons" id="buttonContainer">
+                <button class="yes-btn" onclick="sayYes()">Let's celebrate! 💖</button>
+                <button class="no-btn" id="noBtn" onclick="moveButton()">No</button>
+            </div>
+        </div>
+
+        <div class="page hidden" id="page2">
+            <div class="celebration">🎉✨💕🐱🐶✨🎉</div>
+            <h1 style="color: #d4447e;">You're never leaving... LOVE UUUUUUUU</h1>
+            
+            <div style="margin: 25px 0;">
+                <img src="https://media1.tenor.com/m/QDVocETIdDEAAAAC/love-hearst.gif" alt="Celebration" style="width: 200px; height: 200px; object-fit: cover; border-radius: 15px; display: block; margin: 0 auto;">
+            </div>
+            
+            <p style="margin-top: 25px;">I'm sorry it's so late! Please forgive me! 💝</p>
+            <button class="yes-btn" style="margin-top: 20px;" onclick="goToReservation()">Tap here to choose a time!</button>
+        </div>
+
+        <div class="page hidden" id="page3">
+            <div class="celebration">⏰✨💕</div>
+            <h1 style="color: #d4447e;">Let's set our times!</h1>
+            
+            <div style="margin: 20px 0;">
+                <img src="https://github.com/kjimenez60645-oss/pricy/raw/main/IMG_0466.png" alt="Me" style="width: 100%; max-width: 250px; height: auto; object-fit: contain; border-radius: 20px; display: block; margin: 0 auto; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(86, 171, 47, 0.1), rgba(168, 224, 99, 0.1)); padding: 20px; border-radius: 20px; margin: 20px 0;">
+                <h2 style="color: #2d7a3e; font-size: 1.3em; margin-bottom: 10px;">💖(DJ PRICY ABOVEE)💖  Tonight - Anniversary Minecraft Date!</h2>
+                <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">Let's build a farm with cows and chickens! 🐮🐔</p>
+                <p style="font-weight: bold; color: #2d7a3e; margin-bottom: 10px;">What time works for you TONIGHT?</p>
+                <p style="font-size: 0.9em; color: #888; margin-bottom: 5px;">(The times shown below are YOUR time!)</p>
+                <p style="font-size: 0.85em; color: #999; margin-bottom: 10px;">My times are the one below yours - Don't forget to text me! 📱</p>
+                <div class="time-options">
+                    <button class="time-btn" id="tonight-1" style="background: linear-gradient(135deg, #56ab2f 0%, #66bb3f 100%);" onclick="selectTonightTimeBtn('11:30 PM', 'tonight-1')">
+                        12:30 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(11:30 PM my time)</span>
+                    </button>
+                    <button class="time-btn" id="tonight-2" style="background: linear-gradient(135deg, #56ab2f 0%, #66bb3f 100%);" onclick="selectTonightTimeBtn('11:45 PM', 'tonight-2')">
+                        12:45 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(11:45 PM my time)</span>
+                    </button>
+                    <button class="time-btn" id="tonight-3" style="background: linear-gradient(135deg, #56ab2f 0%, #66bb3f 100%);" onclick="selectTonightTimeBtn('12:00 AM', 'tonight-3')">
+                        1:00 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(12:00 AM my time)</span>
+                    </button>
+                </div>
+                <button class="continue-btn" id="tonightContinue" onclick="confirmTonight()">Continue 💕</button>
+            </div>
+
+            <div id="valentineSection" style="background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), rgba(245, 87, 108, 0.1)); padding: 20px; border-radius: 20px; margin: 20px 0; opacity: 0.5; pointer-events: none;">
+                <h2 style="color: #d4447e; font-size: 1.3em; margin-bottom: 10px;">💕 Tomorrow - Valentine's Day!</h2>
+                <p style="font-weight: bold; color: #d4447e; margin-bottom: 10px;">What time for Valentine's celebration?</p>
+                <p style="font-size: 0.9em; color: #888; margin-bottom: 5px;">(The times shown below are YOUR time!)</p>
+                <p style="font-size: 0.85em; color: #999; margin-bottom: 10px;">My times are the one below yours - Don't forget to text me! 📱</p>
+                <div class="time-options">
+                    <button class="time-btn" id="valentine-1" onclick="selectValentineTimeBtn('11:30 PM', 'valentine-1')">
+                        12:30 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(11:30 PM my time)</span>
+                    </button>
+                    <button class="time-btn" id="valentine-2" onclick="selectValentineTimeBtn('11:45 PM', 'valentine-2')">
+                        12:45 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(11:45 PM my time)</span>
+                    </button>
+                    <button class="time-btn" id="valentine-3" onclick="selectValentineTimeBtn('12:00 AM', 'valentine-3')">
+                        1:00 AM<br><span style="font-size: 0.75em; opacity: 0.8;">(12:00 AM my time)</span>
+                    </button>
+                </div>
+                <button class="continue-btn" id="valentineContinue" onclick="confirmValentine()">Finish! 💕</button>
+            </div>
+        </div>
+
+        <div class="page hidden" id="page4">
+            <div class="celebration">🌹💗🌹</div>
+            <h1 style="color: #d4447e;">Perfect! Two amazing dates!? Thanks!</h1>
+            
+            <div style="margin: 20px 0;">
+                <img src="https://media.tenor.com/eRYGmiEZZycAAAAi/bunny-love.gif" alt="Love" style="width: 180px; height: 180px; object-fit: cover; border-radius: 20px; display: block; margin: 0 auto;">
+            </div>
+            
+            <div style="margin: 25px 0; padding: 20px; background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7)); border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                <p id="tonightTimeText" style="font-size: 1.2em; color: #2d7a3e; font-weight: bold; margin: 15px 0;"></p>
+                <p style="font-size: 0.9em; color: #666; margin: 10px 0;">🐮🐔 Building our farm together! ⛏️</p>
+                
+                <div id="countdown" style="margin: 15px 0; padding: 12px; background: rgba(86, 171, 47, 0.1); border-radius: 10px;">
+                    <p style="font-size: 0.85em; color: #2d7a3e; font-weight: bold; margin: 0;">⏰ Time until our date: <span id="countdownText">Calculating...</span></p>
+                </div>
+                
+                <div style="margin: 20px 0; height: 2px; background: linear-gradient(90deg, transparent, #d4447e, transparent);"></div>
+                
+                <p id="valentineTimeText" style="font-size: 1.2em; color: #d4447e; font-weight: bold; margin: 15px 0;"></p>
+                <p style="font-size: 0.9em; color: #666; margin: 10px 0;">💕 Our special Valentine's Day!</p>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 1.1em; line-height: 1.6;">Can't wait to celebrate with you! You make every day feel special 💕</p>
+            
+            <div style="margin-top: 25px; padding: 15px; background: rgba(86, 171, 47, 0.1); border-radius: 15px; border-left: 4px solid #2d7a3e;">
+                <p style="font-style: italic; color: #666; font-size: 0.95em; margin: 0;">💚 P.S. - Maybe we can put our beds next to each other AND have lots dogs and cats? 🛏️❤️🛏️ 🐶🐱</p>
+            </div>
+            
+            <div id="secretMessage" style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 15px; opacity: 0; transition: opacity 1s ease-in; box-shadow: 0 5px 20px rgba(245, 87, 108, 0.3);">
+                <p style="font-size: 1.3em; color: white; font-weight: bold; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">When I see you, I see forever. Words fall short of my truth. Nothing can shake my love.💕</p>
+                <p style="font-size: 0.9em; color: rgba(255,255,255,0.9); margin-top: 8px; font-style: italic;">Happy Anniversary & Valentine's Day!</p>
+            </div>
+            
+            <p style="margin-top: 25px; font-size: 0.9em; color: #999;">Don't forget to text me! See you soon 📱💕</p>
+        </div>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-bg';
+            const symbols = ['💕', '💚', '❤️', '🐱', '🐶', '🐮', '🐔', '💖', '💚'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        setInterval(createHeart, 400);
+        for(let i = 0; i < 30; i++) {
+            setTimeout(createHeart, i * 150);
+        }
+
+        let tonightTime = '';
+        let valentineTime = '';
+        let currentPage = 1;
+
+        function updateNavArrows() {
+            const backArrow = document.getElementById('backArrow');
+            const forwardArrow = document.getElementById('forwardArrow');
+            
+            if (currentPage > 1) {
+                backArrow.classList.add('show');
+            } else {
+                backArrow.classList.remove('show');
+            }
+            
+            if (currentPage === 1 && tonightTime && valentineTime) {
+                forwardArrow.classList.add('show');
+            } else if (currentPage === 2) {
+                forwardArrow.classList.add('show');
+            } else if (currentPage === 3 && tonightTime && valentineTime) {
+                forwardArrow.classList.add('show');
+            } else {
+                forwardArrow.classList.remove('show');
+            }
+        }
+
+        function sayYes() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+            currentPage = 2;
+            updateNavArrows();
+            for(let i = 0; i < 60; i++) {
+                setTimeout(createHeart, i * 50);
+            }
+        }
+
+        function goToReservation() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+            currentPage = 3;
+            updateNavArrows();
+        }
+
+        function goBack() {
+            if (currentPage > 1) {
+                document.getElementById('page' + currentPage).classList.add('hidden');
+                currentPage--;
+                document.getElementById('page' + currentPage).classList.remove('hidden');
+                updateNavArrows();
+            }
+        }
+
+        function goForward() {
+            if (currentPage < 4) {
+                if (currentPage === 1 && (!tonightTime || !valentineTime)) return;
+                if (currentPage === 3 && (!tonightTime || !valentineTime)) return;
+                
+                document.getElementById('page' + currentPage).classList.add('hidden');
+                currentPage++;
+                document.getElementById('page' + currentPage).classList.remove('hidden');
+                
+                if (currentPage === 4 && tonightTime && valentineTime) {
+                    document.getElementById('tonightTimeText').textContent = `Tonight (Anniversary) at ${tonightTime} 🎮`;
+                    document.getElementById('valentineTimeText').textContent = `Tomorrow (Valentine's) at ${valentineTime} 💕`;
+                    startCountdown(tonightTime);
+                    setTimeout(() => {
+                        document.getElementById('secretMessage').style.opacity = '1';
+                    }, 3000);
+                    for(let i = 0; i < 80; i++) {
+                        setTimeout(createHeart, i * 40);
+                    }
+                }
+                updateNavArrows();
+            }
+        }
+
+        function selectTonightTimeBtn(time, btnId) {
+            tonightTime = time;
+            ['tonight-1', 'tonight-2', 'tonight-3'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('selected');
+                if (id !== btnId) {
+                    btn.classList.add('disabled');
+                }
+            });
+            document.getElementById(btnId).classList.add('selected');
+            document.getElementById(btnId).classList.remove('disabled');
+            document.getElementById('tonightContinue').classList.add('show');
+            updateNavArrows();
+        }
+
+        function confirmTonight() {
+            const valentineSection = document.getElementById('valentineSection');
+            valentineSection.style.opacity = '1';
+            valentineSection.style.pointerEvents = 'auto';
+            valentineSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function selectValentineTimeBtn(time, btnId) {
+            valentineTime = time;
+            ['valentine-1', 'valentine-2', 'valentine-3'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('selected');
+                if (id !== btnId) {
+                    btn.classList.add('disabled');
+                }
+            });
+            document.getElementById(btnId).classList.add('selected');
+            document.getElementById(btnId).classList.remove('disabled');
+            document.getElementById('valentineContinue').classList.add('show');
+            updateNavArrows();
+        }
+
+        function confirmValentine() {
+            if (tonightTime && valentineTime) {
+                document.getElementById('page3').classList.add('hidden');
+                document.getElementById('tonightTimeText').textContent = `Tonight (Anniversary) at ${tonightTime} 🎮`;
+                document.getElementById('valentineTimeText').textContent = `Tomorrow (Valentine's) at ${valentineTime} 💕`;
+                document.getElementById('page4').classList.remove('hidden');
+                currentPage = 4;
+                updateNavArrows();
+                
+                for(let i = 0; i < 80; i++) {
+                    setTimeout(createHeart, i * 40);
+                }
+                startCountdown(tonightTime);
+                setTimeout(() => {
+                    document.getElementById('secretMessage').style.opacity = '1';
+                }, 3000);
+            }
+        }
+
+        function startCountdown(timeString) {
+            const timeParts = timeString.match(/(\d+):(\d+)\s*(AM|PM)/i);
+            if (!timeParts) return;
+
+            let hours = parseInt(timeParts[1]);
+            const minutes = parseInt(timeParts[2]);
+            const period = timeParts[3].toUpperCase();
+
+            if (period === 'PM' && hours !== 12) hours += 12;
+            if (period === 'AM' && hours === 12) hours = 0;
+
+            function updateCountdown() {
+                const now = new Date();
+                const today = new Date();
+                today.setHours(hours, minutes, 0, 0);
+
+                if (today < now) {
+                    today.setDate(today.getDate() + 1);
+                }
+
+                const diff = today - now;
+                const hoursLeft = Math.floor(diff / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secondsLeft = Math.floor((diff % (1000 * 60)) / 1000);
+
+                const countdownText = document.getElementById('countdownText');
+                if (diff <= 0) {
+                    countdownText.textContent = "It's time! 🎮💕";
+                    clearInterval(countdownInterval);
+                } else if (hoursLeft > 0) {
+                    countdownText.textContent = `${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+                } else if (minutesLeft > 0) {
+                    countdownText.textContent = `${minutesLeft}m ${secondsLeft}s`;
+                } else {
+                    countdownText.textContent = `${secondsLeft} seconds!`;
+                }
+            }
+
+            updateCountdown();
+            const countdownInterval = setInterval(updateCountdown, 1000);
+        }
+
+        let moveCount = 0;
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const yesBtn = document.querySelector('.yes-btn');
+            const container = document.querySelector('.container');
+            
+            moveCount++;
+            const newScale = 1 + (moveCount * 0.2);
+            yesBtn.style.transform = `scale(${newScale})`;
+            
+            if(moveCount === 1) {
+                btn.textContent = 'Wait... are you sure? 🥺';
+            } else if(moveCount === 2) {
+                btn.textContent = 'Please reconsider! 💔';
+                btn.style.transform = 'scale(0.9)';
+            } else if(moveCount === 3) {
+                btn.textContent = 'But... but... 😢';
+                btn.style.transform = 'scale(0.8)';
+            } else if(moveCount === 4) {
+                btn.textContent = "Don't break my heart! 💔";
+                btn.style.transform = 'scale(0.75)';
+            } else if(moveCount === 5) {
+                btn.textContent = 'Really? Really?? 🥺';
+                btn.style.transform = 'scale(0.7)';
+            } else {
+                btn.textContent = 'No...? 😭';
+                btn.style.transform = 'scale(0.65)';
+            }
+            
+            const maxX = container.offsetWidth - btn.offsetWidth - 40;
+            const maxY = container.offsetHeight - btn.offsetHeight - 40;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            btn.style.position = 'absolute';
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        }
+
+        let musicPlaying = false;
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicToggle');
+            
+            if (musicPlaying) {
+                music.pause();
+                btn.textContent = '🔇';
+                musicPlaying = false;
+            } else {
+                music.play();
+                btn.textContent = '🔊';
+                musicPlaying = true;
+            }
+        }
+
+        document.addEventListener('click', function initMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicToggle');
+            if (music) {
+                music.play();
+                btn.style.display = 'flex';
+                btn.textContent = '🔊';
+                musicPlaying = true;
+            }
+            document.removeEventListener('click', initMusic);
+        }, { once: true });
+    </script>
+</body>
+</html>
